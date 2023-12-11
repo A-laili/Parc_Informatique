@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title><ui:insert name="title">Parc Informatique</ui:insert></title>
+        
+    </h:head>
+    <h:body>
+
+
+        <p:growl id="growl" life="3000" />
+
+        <p:layout fullPage="true">
+            <p:layoutUnit position="west" size="180" header="#{bundle.AppName}">
+                <h:form id="menuForm">
+                    <p:menu>
+                        <p:menuitem value="#{bundle.Home}" outcome="/faces/machine/MachineFilter.xhtml" icon="ui-icon-home"/>
+                        <p:submenu label="#{bundle.Maintenance}">
+                            <p:menuitem value="Employe" outcome="/faces/employe/List.xhtml" />
+                            <p:menuitem value="Machine" outcome="/faces/machine/List.xhtml" />
+                            <p:menuitem value="Machine Filter" outcome="/faces/machine/MachineFilter.xhtml" />
+                        </p:submenu>
+                    </p:menu>
+                    <h:form class="flex-box" style="flex-direction:column;">
+                        <h:outputText value="#{bundle.Language}" ></h:outputText>
+
+                        <p:selectOneMenu required="true" value="#{languageBean.localeCode}" onchange="submit()" valueChangeListener="#{languageBean.countryLocalChanged}" >
+                           
+                            <f:selectItems value="#{languageBean.countries}"></f:selectItems>
+                            
+                        </p:selectOneMenu>
+                    </h:form>
+                </h:form>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" size="60">
+                <ui:insert name="footer"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center">
+                <ui:insert name="body"/>
+            </p:layoutUnit>
+
+        </p:layout>
+
+    </h:body>
+
+</html>

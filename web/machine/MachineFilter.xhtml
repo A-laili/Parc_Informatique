@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListMachineTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="MachineListForm">
+                <p:panel header="#{bundle.ListMachineTitle}">
+
+                    <!-- Filter by Employee -->
+                    <p:outputLabel value="Filter by Employee:" />
+                    <p:selectOneMenu value="#{machineController.selectedEmployee}" >
+                        <f:selectItem itemLabel="Select Employee" itemValue="#{null}" />
+                        <f:selectItems value="#{employeController.itemsAvailableSelectOne}" var="employeItem"
+                                       itemValue="#{employeItem}" itemLabel="#{employeItem.nom}" />
+                        <p:ajax update="datalist" />
+                    </p:selectOneMenu>
+
+                    <!-- DataTable for Machines -->
+                    <p:dataTable id="datalist" value="#{machineController.filteredItems}" var="item"
+                                 selectionMode="single" selection="#{machineController.selectedEmployee}" 
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50">
+
+                       
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMachineTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMachineTitle_marque}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.marque}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMachineTitle_prix}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.prix}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMachineTitle_reference}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.reference}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMachineTitle_employe}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.employe.nom}"/>
+                        </p:column>
+                        <!-- Other columns and components -->
+
+                        <!-- Sort by Date -->
+                        <p:column headerText="Date Achat" sortBy="#{item.dateAchat}">
+                            <h:outputText value="#{item.dateAchat}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                    </p:dataTable>
+
+                    <!-- Chart -->
+                    <div style="width: 80%; margin: auto; padding-top: 20px;">
+                        <canvas id="machinesByYearChart"></canvas>
+                    </div>
+
+                    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script type="text/javascript">
+                        // Données dynamiques pour le graphique
+                        var years = [];
+                        var machinesCount = [];
+
+                        <c:forEach var="entry" items="#{machineController.machinesData.entrySet()}">
+                            years.push(#{entry.key});
+                            machinesCount.push(#{entry.value});
+                        </c:forEach>
+
+                        // Créer le graphique
+                        var ctx = document.getElementById('machinesByYearChart').getContext('2d');
+                        var machinesChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: years,
+                                datasets: [{
+                                    label: 'Machines Acquired by Year',
+                                    data: machinesCount,
+                                    backgroundColor: 'rgba(75, 80, 192, 0.2)', 
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    x: {
+                    title: {
+                        display: true,
+                        text: 'Years'  // X-axis title
+                    },
+                    data : years,
+                    beginAtZero: true
+                },
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                   
+                                }
+                            }
+                        });
+                    </script>
+
+                </p:panel>
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+
+</html>
