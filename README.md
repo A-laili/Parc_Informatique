@@ -39,9 +39,11 @@ Ce projet vise à implémenter un système d'attribution de machines aux employ�
 - Accès à l'Application :
 - Accédez à l'application via l'URL : http://localhost:8080/WebApplication5/faces/machine/MachineFilter.xhtml
 
-# Capture d'écran
-## Login
-![image](https://github.com/A-laili/Parc_Informatique/assets/147451080/4348f91b-8d67-407d-96e0-b0b601f4990d)
+# Démo
+
+
+
+https://github.com/A-laili/Parc_Informatique/assets/147451080/c361fa58-30fb-4d91-ba56-f7a47ed902e7
 
 
 
