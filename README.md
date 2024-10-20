@@ -5,6 +5,8 @@ Ce projet vise à implémenter un système d'attribution de machines aux employ�
 
 # Fonctionnalités
 
+
+
 - Gestion des Employés : Ajouter, mettre à jour et supprimer des informations sur les employés, y compris le nom, le prénom et le salaire.
 - Gestion des Machines : Ajouter, mettre à jour et supprimer des informations sur les machines, y compris la référence, la marque, la date d'achat, le prix et l'employé associé.
 - Filtrage et Tri des Machines : Filtrer la liste des machines par employé et trier par date d'achat.
